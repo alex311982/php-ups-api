@@ -1,22 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ups\Entity\RateTimeInTransit;
 
 use Ups\Entity\ServiceSummaryTrait;
+use stdClass;
 
+/**
+ * Class ServiceSummary
+ */
 class ServiceSummary
 {
     use ServiceSummaryTrait;
 
     /**
-     * @var
+     * @var EstimatedArrival|null
      */
     protected $estimatedArrival;
 
     /**
-     * @param \stdClass|null $response
+     * @param stdClass|null $response
      */
-    public function __construct(\stdClass $response = null)
+    public function __construct(stdClass $response = null)
     {
         $this->build($response);
 
@@ -32,7 +38,7 @@ class ServiceSummary
     /**
      * @return EstimatedArrival|null
      */
-    public function getEstimatedArrival()
+    public function getEstimatedArrival(): ?EstimatedArrival
     {
         return $this->estimatedArrival;
     }

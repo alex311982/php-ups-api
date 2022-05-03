@@ -1,13 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ups\Entity\RateTimeInTransit;
 
 use Ups\Entity\EstimatedArrivalTrait;
 
+/**
+ * Class EstimatedArrival
+ */
 class EstimatedArrival
 {
     use EstimatedArrivalTrait;
 
+    /**
+     * @var string
+     */
     protected $businessDaysInTransit;
 
     /**
@@ -27,7 +35,7 @@ class EstimatedArrival
     /**
      * @return string
      */
-    public function getBusinessDaysInTransit()
+    public function getBusinessDaysInTransit(): string
     {
         return $this->businessDaysInTransit;
     }
@@ -35,7 +43,7 @@ class EstimatedArrival
     /**
      * @param string $BusinessDaysInTransit
      */
-    public function setBusinessDaysInTransit($BusinessDaysInTransit)
+    public function setBusinessDaysInTransit(string $BusinessDaysInTransit)
     {
         $this->businessDaysInTransit = $BusinessDaysInTransit;
     }

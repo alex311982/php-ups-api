@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ups\Entity\Tradeability;
 
 use DOMDocument;
 use DOMElement;
 
+/**
+ * Class FreightCharges
+ */
 class FreightCharges extends \Ups\Entity\FreightCharges
 {
     private $currencyCode;
@@ -24,16 +29,18 @@ class FreightCharges extends \Ups\Entity\FreightCharges
      * @param null|DOMDocument $document
      *
      * @return DOMElement
+     *
+     * @throws \DOMException
      */
-    public function toNode(DOMDocument $document = null)
+    public function toNode(DOMDocument $document = null): DOMElement
     {
         if (null === $document) {
             $document = new DOMDocument();
         }
 
         $node = $document->createElement('FreightCharges');
-        $node->appendChild($document->createElement('MonetaryValue', $this->getMonetaryValue()));
-        $node->appendChild($document->createElement('CurrencyCode', $this->getCurrencyCode()));
+        $node->appendChild($document->createElement('MonetaryValue', (string)$this->getMonetaryValue()));
+        $node->appendChild($document->createElement('CurrencyCode', (string)$this->getCurrencyCode()));
 
         return $node;
     }

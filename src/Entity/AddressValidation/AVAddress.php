@@ -1,68 +1,91 @@
-<?php namespace Ups\Entity\AddressValidation;
+<?php
 
+declare(strict_types=1);
+
+namespace Ups\Entity\AddressValidation;
+
+use SimpleXMLElement;
+use InvalidArgumentException;
+
+/**
+ * Class AVAddress
+ */
 class AVAddress
 {
     /**
      * @var null|AddressClassification
      */
     public $addressClassification;
+
     /**
      * @var string
      */
     public $consigneeName;
+
     /**
      * @var string
      */
     public $buildingName;
+
     /**
      * @var string
      */
     public $addressLine;
+
     /**
      * @var string
      */
     public $addressLine2;
+
     /**
      * @var string
      */
     public $addressLine3;
+
     /**
      * @var string
      */
     public $region;
+
     /**
      * @var string
      */
     public $politicalDivision2;
+
     /**
      * @var string
      */
     public $politicalDivision1;
+
     /**
      * @var string
      */
     public $postcodePrimaryLow;
+
     /**
      * @var string
      */
     public $postcodeExtendedLow;
+
     /**
      * @var string
      */
     public $urbanization;
+
     /**
-     * @var
+     * @var string
      */
     public $countryCode;
 
     /**
      * Address constructor.
-     * @param \SimpleXMLElement $xmlDoc
+     *
+     * @param SimpleXMLElement $xmlDoc
      */
-    public function __construct(\SimpleXMLElement $xmlDoc)
+    public function __construct(SimpleXMLElement $xmlDoc)
     {
         if ($xmlDoc->count() == 0) {
-            throw new \InvalidArgumentException(__METHOD__.': The passed object does not have any child nodes.');
+            throw new InvalidArgumentException(__METHOD__.': The passed object does not have any child nodes.');
         }
         $this->addressClassification = isset($xmlDoc->AddressClassification) ? new AddressClassification($xmlDoc->AddressClassification) : null;
         $this->consigneeName = isset($xmlDoc->ConsigneeName) ? (string)$xmlDoc->ConsigneeName : '';
@@ -91,7 +114,7 @@ class AVAddress
     /**
      * @return string
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->politicalDivision2;
     }
@@ -99,7 +122,7 @@ class AVAddress
     /**
      * @return string
      */
-    public function getRegion()
+    public function getRegion(): string
     {
         return $this->region;
     }
@@ -107,7 +130,7 @@ class AVAddress
     /**
      * @return string
      */
-    public function getConsigneeName()
+    public function getConsigneeName(): string
     {
         return $this->consigneeName;
     }
@@ -115,7 +138,7 @@ class AVAddress
     /**
      * @return string
      */
-    public function getUrbanization()
+    public function getUrbanization(): string
     {
         return $this->urbanization;
     }
@@ -123,7 +146,7 @@ class AVAddress
     /**
      * @return string
      */
-    public function getBuildingName()
+    public function getBuildingName(): string
     {
         return $this->buildingName;
     }
@@ -131,7 +154,7 @@ class AVAddress
     /**
      * @return string
      */
-    public function getStateProvince()
+    public function getStateProvince(): string
     {
         return $this->politicalDivision1;
     }
@@ -141,7 +164,7 @@ class AVAddress
      *
      * @return string
      */
-    public function getPostalCode()
+    public function getPostalCode(): string
     {
         return $this->postcodePrimaryLow;
     }
@@ -150,20 +173,20 @@ class AVAddress
      * Return the address postal code with extension (i.e. the U.S. extended zip+4 postal code)
      *
      * @param string $divider
+     *
      * @return string
      */
-    public function getPostalCodeWithExtension($divider = '-')
+    public function getPostalCodeWithExtension(string $divider = '-'): string
     {
         return $this->postcodePrimaryLow.$divider.$this->postcodeExtendedLow;
     }
 
     /**
-     * @return string
-     *
      * @param int $lineNumber
+     *
      * @return string
      */
-    public function getAddressLine($lineNumber = 1)
+    public function getAddressLine(int $lineNumber = 1): string
     {
         $var = 'addressLine'.($lineNumber > 1 ? $lineNumber : '');
         return $this->{$var};

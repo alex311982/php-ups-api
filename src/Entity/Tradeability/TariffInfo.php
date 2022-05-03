@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ups\Entity\Tradeability;
 
 use DOMDocument;
@@ -11,7 +13,6 @@ use Ups\NodeInterface;
  */
 class TariffInfo implements NodeInterface
 {
-
     /**
      * @var string
      * @required
@@ -40,8 +41,10 @@ class TariffInfo implements NodeInterface
      * @param null|DOMDocument $document
      *
      * @return DOMElement
+     *
+     * @throws \DOMException
      */
-    public function toNode(DOMDocument $document = null)
+    public function toNode(DOMDocument $document = null): DOMElement
     {
         if (null === $document) {
             $document = new DOMDocument();
@@ -50,17 +53,17 @@ class TariffInfo implements NodeInterface
         $node = $document->createElement('TariffInfo');
 
         // Required
-        $node->appendChild($document->createElement('TariffCode', $this->getTariffCode()));
+        $node->appendChild($document->createElement('TariffCode', (string)$this->getTariffCode()));
 
         // Optional
         if ($this->getDetailId() !== null) {
-            $node->appendChild($document->createElement('DetailId', $this->getDetailId()));
+            $node->appendChild($document->createElement('DetailId', (string)$this->getDetailId()));
         }
         if ($this->getSecondaryTariffCode() !== null) {
-            $node->appendChild($document->createElement('SecondaryTariffCode', $this->getSecondaryTariffCode()));
+            $node->appendChild($document->createElement('SecondaryTariffCode', (string)$this->getSecondaryTariffCode()));
         }
         if ($this->getSecondaryDetailId() !== null) {
-            $node->appendChild($document->createElement('SecondaryDetailId', $this->getSecondaryDetailId()));
+            $node->appendChild($document->createElement('SecondaryDetailId', (string)$this->getSecondaryDetailId()));
         }
 
         return $node;
@@ -76,69 +79,57 @@ class TariffInfo implements NodeInterface
 
     /**
      * @param string $tariffCode
-     * @return TariffInfo
      */
-    public function setTariffCode($tariffCode)
+    public function setTariffCode(string $tariffCode): void
     {
         $this->tariffCode = $tariffCode;
-
-        return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDetailId()
+    public function getDetailId(): ?string
     {
         return $this->detailId;
     }
 
     /**
      * @param string $detailId
-     * @return TariffInfo
      */
-    public function setDetailId($detailId)
+    public function setDetailId(string $detailId): void
     {
         $this->detailId = $detailId;
-
-        return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSecondaryTariffCode()
+    public function getSecondaryTariffCode(): ?string
     {
         return $this->secondaryTariffCode;
     }
 
     /**
      * @param string $secondaryTariffCode
-     * @return TariffInfo
      */
-    public function setSecondaryTariffCode($secondaryTariffCode)
+    public function setSecondaryTariffCode(string $secondaryTariffCode): void
     {
         $this->secondaryTariffCode = $secondaryTariffCode;
-
-        return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSecondaryDetailId()
+    public function getSecondaryDetailId(): ?string
     {
         return $this->secondaryDetailId;
     }
 
     /**
      * @param string $secondaryDetailId
-     * @return TariffInfo
      */
-    public function setSecondaryDetailId($secondaryDetailId)
+    public function setSecondaryDetailId(string $secondaryDetailId): string
     {
         $this->secondaryDetailId = $secondaryDetailId;
-
-        return $this;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ups\Entity\Tradeability;
 
 use DOMDocument;
@@ -11,7 +13,6 @@ use Ups\NodeInterface;
  */
 class Quantity implements NodeInterface
 {
-
     /**
      * @var UnitOfMeasurement
      */
@@ -26,8 +27,10 @@ class Quantity implements NodeInterface
      * @param null|DOMDocument $document
      *
      * @return DOMElement
+     *
+     * @throws \DOMException
      */
-    public function toNode(DOMDocument $document = null)
+    public function toNode(DOMDocument $document = null): DOMElement
     {
         if (null === $document) {
             $document = new DOMDocument();
@@ -36,7 +39,7 @@ class Quantity implements NodeInterface
         $node = $document->createElement('Quantity');
 
         // Required
-        $node->appendChild($document->createElement('Value', $this->getValue()));
+        $node->appendChild($document->createElement('Value', (string)$this->getValue()));
 
         // Optional
         if ($this->getUnitOfMeasurement() instanceof UnitOfMeasurement) {
@@ -49,38 +52,32 @@ class Quantity implements NodeInterface
     /**
      * @return int
      */
-    public function getValue()
+    public function getValue(): ?int
     {
         return $this->value;
     }
 
     /**
      * @param int $value
-     * @return Quantity
      */
-    public function setValue($value)
+    public function setValue(int $value): void
     {
         $this->value = $value;
-
-        return $this;
     }
 
     /**
-     * @return UnitOfMeasurement
+     * @return UnitOfMeasurement|null
      */
-    public function getUnitOfMeasurement()
+    public function getUnitOfMeasurement(): ?UnitOfMeasurement
     {
         return $this->unitOfMeasurement;
     }
 
     /**
      * @param UnitOfMeasurement $unitOfMeasurement
-     * @return Quantity
      */
-    public function setUnitOfMeasurement(UnitOfMeasurement $unitOfMeasurement)
+    public function setUnitOfMeasurement(UnitOfMeasurement $unitOfMeasurement): void
     {
         $this->unitOfMeasurement = $unitOfMeasurement;
-
-        return $this;
     }
 }

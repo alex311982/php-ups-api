@@ -1,11 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ups\Entity\Tradeability;
 
 use DomDocument;
 use DomElement;
 use Ups\NodeInterface;
 
+/**
+ * Class QueryRequest.
+ */
 class QueryRequest implements NodeInterface
 {
 
@@ -23,8 +28,10 @@ class QueryRequest implements NodeInterface
      * @param null|DOMDocument $document
      *
      * @return DOMElement
+     *
+     * @throws \DOMException
      */
-    public function toNode(DOMDocument $document = null)
+    public function toNode(DOMDocument $document = null): DOMElement
     {
         if (null === $document) {
             $document = new DOMDocument();
@@ -46,40 +53,34 @@ class QueryRequest implements NodeInterface
     }
 
     /**
-     * @return Shipment
+     * @return Shipment|null
      */
-    public function getShipment()
+    public function getShipment(): ?Shipment
     {
         return $this->shipment;
     }
 
     /**
      * @param Shipment $shipment
-     * @return QueryRequest
      */
-    public function setShipment($shipment)
+    public function setShipment(Shipment $shipment): void
     {
         $this->shipment = $shipment;
-
-        return $this;
     }
 
     /**
      * @return boolean
      */
-    public function isSuppressQuestionIndicator()
+    public function isSuppressQuestionIndicator(): bool
     {
         return $this->suppressQuestionIndicator;
     }
 
     /**
      * @param boolean $suppressQuestionIndicator
-     * @return QueryRequest
      */
-    public function setSuppressQuestionIndicator($suppressQuestionIndicator)
+    public function setSuppressQuestionIndicator(bool $suppressQuestionIndicator): void
     {
         $this->suppressQuestionIndicator = $suppressQuestionIndicator;
-
-        return $this;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ups\Entity\Tradeability;
 
 use DOMDocument;
@@ -11,7 +13,6 @@ use Ups\NodeInterface;
  */
 class Product implements NodeInterface
 {
-
     /**
      * @var string
      */
@@ -56,8 +57,10 @@ class Product implements NodeInterface
      * @param null|DOMDocument $document
      *
      * @return DOMElement
+     *
+     * @throws \DOMException
      */
-    public function toNode(DOMDocument $document = null)
+    public function toNode(DOMDocument $document = null): DOMElement
     {
         if (null === $document) {
             $document = new DOMDocument();
@@ -78,16 +81,16 @@ class Product implements NodeInterface
 
         // Optional
         if ($this->getProductName() !== null) {
-            $node->appendChild($document->createElement('ProductName', $this->getProductName()));
+            $node->appendChild($document->createElement('ProductName', (string)$this->getProductName()));
         }
         if ($this->getProductDescription() !== null) {
-            $node->appendChild($document->createElement('ProductDescription', $this->getProductDescription()));
+            $node->appendChild($document->createElement('ProductDescription', (string)$this->getProductDescription()));
         }
         if ($this->getProductCountryCodeOfOrigin() !== null) {
             $node->appendChild(
                 $document->createElement(
                     'ProductCountryCodeOfOrigin',
-                    $this->getProductCountryCodeOfOrigin()
+                    (string)$this->getProductCountryCodeOfOrigin()
                 )
             );
         }
@@ -95,161 +98,137 @@ class Product implements NodeInterface
             $node->appendChild($this->getWeight()->toNode($document));
         }
         if ($this->getTariffCodeAlert() !== null) {
-            $node->appendChild($document->createElement('TariffCodeAlert', $this->getTariffCodeAlert()));
+            $node->appendChild($document->createElement('TariffCodeAlert', (string)$this->getTariffCodeAlert()));
         }
 
         return $node;
     }
 
     /**
-     * @return TariffInfo
+     * @return TariffInfo|null
      */
-    public function getTariffInfo()
+    public function getTariffInfo(): ?TariffInfo
     {
         return $this->tariffInfo;
     }
 
     /**
      * @param TariffInfo $tariffInfo
-     * @return Product
      */
-    public function setTariffInfo(TariffInfo $tariffInfo)
+    public function setTariffInfo(TariffInfo $tariffInfo): void
     {
         $this->tariffInfo = $tariffInfo;
-
-        return $this;
     }
 
     /**
-     * @return UnitPrice
+     * @return UnitPrice|null
      */
-    public function getUnitPrice()
+    public function getUnitPrice(): ?UnitPrice
     {
         return $this->unitPrice;
     }
 
     /**
      * @param UnitPrice $unitPrice
-     * @return Product
      */
-    public function setUnitPrice($unitPrice)
+    public function setUnitPrice(UnitPrice $unitPrice): void
     {
         $this->unitPrice = $unitPrice;
-
-        return $this;
     }
 
     /**
-     * @return Quantity
+     * @return Quantity|null
      */
-    public function getQuantity()
+    public function getQuantity(): ?Quantity
     {
         return $this->quantity;
     }
 
     /**
      * @param Quantity $quantity
-     * @return Product
      */
-    public function setQuantity($quantity)
+    public function setQuantity(Quantity $quantity): void
     {
         $this->quantity = $quantity;
-
-        return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getProductName()
+    public function getProductName(): ?string
     {
         return $this->productName;
     }
 
     /**
      * @param string $productName
-     * @return Product
      */
-    public function setProductName($productName)
+    public function setProductName(string $productName): void
     {
         $this->productName = $productName;
-
-        return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getProductDescription()
+    public function getProductDescription(): ?string
     {
         return $this->productDescription;
     }
 
     /**
      * @param string $productDescription
-     * @return Product
      */
-    public function setProductDescription($productDescription)
+    public function setProductDescription(string $productDescription): void
     {
         $this->productDescription = $productDescription;
-
-        return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getProductCountryCodeOfOrigin()
+    public function getProductCountryCodeOfOrigin(): ?string
     {
         return $this->productCountryCodeOfOrigin;
     }
 
     /**
      * @param string $productCountryCodeOfOrigin
-     * @return Product
      */
-    public function setProductCountryCodeOfOrigin($productCountryCodeOfOrigin)
+    public function setProductCountryCodeOfOrigin(string $productCountryCodeOfOrigin): void
     {
         $this->productCountryCodeOfOrigin = $productCountryCodeOfOrigin;
-
-        return $this;
     }
 
     /**
-     * @return Weight
+     * @return Weight|null
      */
-    public function getWeight()
+    public function getWeight(): ?Weight
     {
         return $this->weight;
     }
 
     /**
      * @param Weight $weight
-     * @return Product
      */
-    public function setWeight($weight)
+    public function setWeight(Weight $weight): void
     {
         $this->weight = $weight;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getTariffCodeAlert()
+    public function getTariffCodeAlert(): int
     {
         return $this->tariffCodeAlert;
     }
 
     /**
      * @param int $tariffCodeAlert
-     * @return Product
      */
-    public function setTariffCodeAlert($tariffCodeAlert)
+    public function setTariffCodeAlert(int $tariffCodeAlert): void
     {
         $this->tariffCodeAlert = $tariffCodeAlert;
-
-        return $this;
     }
 }

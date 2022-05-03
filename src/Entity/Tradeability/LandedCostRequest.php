@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ups\Entity\Tradeability;
 
+/**
+ * Class LandedCostRequest
+ */
 class LandedCostRequest
 {
-
     /**
      * @var QueryRequest
      */
@@ -18,20 +22,17 @@ class LandedCostRequest
     /**
      * @return QueryRequest
      */
-    public function getQueryRequest()
+    public function getQueryRequest(): QueryRequest
     {
         return $this->queryRequest;
     }
 
     /**
      * @param QueryRequest $queryRequest
-     * @return LandedCostRequest
      */
-    public function setQueryRequest($queryRequest)
+    public function setQueryRequest($queryRequest): void
     {
         $this->queryRequest = $queryRequest;
-
-        return $this;
     }
 
     /**
@@ -44,13 +45,9 @@ class LandedCostRequest
 
     /**
      * @param mixed $estimateRequest
-     *
-     * @return LandedCostRequest
      */
-    public function setEstimateRequest($estimateRequest)
+    public function setEstimateRequest($estimateRequest): void
     {
         $this->estimateRequest = $estimateRequest;
-
-        return $this;
     }
 }

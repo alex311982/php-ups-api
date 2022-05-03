@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ups\Entity\Tradeability;
 
 use DOMDocument;
@@ -26,8 +28,10 @@ class UnitPrice implements NodeInterface
      * @param null|DOMDocument $document
      *
      * @return DOMElement
+     *
+     * @throws \DOMException
      */
-    public function toNode(DOMDocument $document = null)
+    public function toNode(DOMDocument $document = null): DOMElement
     {
         if (null === $document) {
             $document = new DOMDocument();
@@ -36,51 +40,45 @@ class UnitPrice implements NodeInterface
         $node = $document->createElement('UnitPrice');
 
         // Required
-        $node->appendChild($document->createElement('MonetaryValue', $this->getMonetaryValue()));
+        $node->appendChild($document->createElement('MonetaryValue', (string)$this->getMonetaryValue()));
 
         // Optional
         if ($this->getCurrencyCode() !== null) {
-            $node->appendChild($document->createElement('CurrencyCode', $this->getCurrencyCode()));
+            $node->appendChild($document->createElement('CurrencyCode', (string)$this->getCurrencyCode()));
         }
 
         return $node;
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getMonetaryValue()
+    public function getMonetaryValue(): ?float
     {
         return $this->monetaryValue;
     }
 
     /**
      * @param float $monetaryValue
-     * @return UnitPrice
      */
-    public function setMonetaryValue($monetaryValue)
+    public function setMonetaryValue(float $monetaryValue)
     {
         $this->monetaryValue = $monetaryValue;
-
-        return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCurrencyCode()
+    public function getCurrencyCode(): ?string
     {
         return $this->currencyCode;
     }
 
     /**
      * @param string $currencyCode
-     * @return UnitPrice
      */
-    public function setCurrencyCode($currencyCode)
+    public function setCurrencyCode(string $currencyCode)
     {
         $this->currencyCode = $currencyCode;
-
-        return $this;
     }
 }
